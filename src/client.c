@@ -6,18 +6,22 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:15 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/11 21:31:46 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/12 00:41:57 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
+char	g_status = BUSY;
+
 void	aknowledge_sig(int signum, siginfo_t *info, void *context)
 {
 	(void)context;
-	ft_printf("OK! (from PID %d)\n", info->si_pid);
+	if (signum == SIGUSR1)
+		ft_printf("OK! (from PID %d)\n", info->si_pid);
+	else 
+		g_status = READY;
 }
-
 
 void	process_message(int pid, char *msg)
 {
@@ -34,17 +38,21 @@ void	process_message(int pid, char *msg)
 				kill(pid, SIGUSR1);
 			else
 				kill(pid, SIGUSR2);
-			ft_printf("%d\n", count);
-			usleep(100);
-		}
+			while (g_status == BUSY)
+				usleep(42);
+		g_status = BUSY;
+			}
 		msg++;
-		count = -1;
+		count = -1;		
 	}
 	while (++count < 8)
 	{
-		kill(SIGUSR2, pid);
-		usleep(100);
+		kill(pid, SIGUSR2);
+		while (g_status == BUSY)
+			usleep(42);
+		g_status = BUSY;
 	}
+	
 }
 
 int	main(int argc, char **argv)
@@ -57,6 +65,7 @@ int	main(int argc, char **argv)
 	sa.sa_sigaction = aknowledge_sig;
 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	if (argc != 3)
 		return (EXIT_FAILURE);
 	else
