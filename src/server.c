@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:21 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/12 00:34:19 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/12 00:48:48 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,6 @@ int main(void)
 	action.sa_flags = SA_SIGINFO | SA_RESTART;
 	action.sa_sigaction = handle_signal;
 	
-	;
-	sigaddset(&action.sa_mask, SIGUSR1);
-	sigaddset(&action.sa_mask, SIGUSR2);
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
 	ft_printf("PID: %d\n", getpid());
