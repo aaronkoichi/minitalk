@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:21 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/12 07:59:33 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/12 14:06:23 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	handle_signal(int signum, siginfo_t *client, void *context)
 	count++;
 	if (count == CHAR_BIT)
 	{
-		ft_printf("%c", charac);
+		write(1, &charac, 1);
 		if (charac == 0)
 		{
 			kill(client_pid, SIGUSR1);

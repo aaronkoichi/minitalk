@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:15 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/12 08:04:10 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/12 14:05:04 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	process_char(int pid, char c)
 		else
 			kill(pid, SIGUSR2);
 		while (g_status == BUSY)
-			usleep(20);
+			usleep(10);
 		g_status = BUSY;
 	}
 }
