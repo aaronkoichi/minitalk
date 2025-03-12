@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:21 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/12 00:48:48 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/12 07:59:33 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 void	handle_signal(int signum, siginfo_t *client, void *context)
 {
-	static char	charac;
-	static int	count;
-	static pid_t client_pid;
+	static char		charac;
+	static int		count;
+	static pid_t	client_pid;
 
 	(void)context;
-
 	if (client->si_pid)
 		client_pid = client->si_pid;
 	if (signum == SIGUSR1)
@@ -39,14 +38,13 @@ void	handle_signal(int signum, siginfo_t *client, void *context)
 	kill(client_pid, SIGUSR2);
 }
 
-int main(void)
+int	main(void)
 {
-	struct sigaction action;
+	struct sigaction	action;
 
 	sigemptyset(&action.sa_mask);
 	action.sa_flags = SA_SIGINFO | SA_RESTART;
 	action.sa_sigaction = handle_signal;
-	
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
 	ft_printf("PID: %d\n", getpid());

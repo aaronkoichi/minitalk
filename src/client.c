@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:15 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/12 00:41:57 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/12 07:58:29 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,37 @@ void	aknowledge_sig(int signum, siginfo_t *info, void *context)
 	(void)context;
 	if (signum == SIGUSR1)
 		ft_printf("OK! (from PID %d)\n", info->si_pid);
-	else 
+	else
 		g_status = READY;
 }
 
-void	process_message(int pid, char *msg)
+void	process_char(int pid, char c)
 {
 	int		count;
 	char	temp;
 
 	count = -1;
+	while (++count < CHAR_BIT)
+	{	
+		temp = c >> count;
+		if (temp & 1)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		while (g_status == BUSY)
+			usleep(20);
+		g_status = BUSY;
+	}
+}
+
+void	process_message(int pid, char *msg)
+{
 	while (*msg)
 	{	
-		while (++count < CHAR_BIT)
-		{	
-			temp = *msg >> count;
-			if (temp & 1)
-				kill(pid, SIGUSR1);
-			else
-				kill(pid, SIGUSR2);
-			while (g_status == BUSY)
-				usleep(42);
-		g_status = BUSY;
-			}
+		process_char(pid, *msg);
 		msg++;
-		count = -1;		
 	}
-	while (++count < 8)
-	{
-		kill(pid, SIGUSR2);
-		while (g_status == BUSY)
-			usleep(42);
-		g_status = BUSY;
-	}
-	
+	process_char(pid, 0);
 }
 
 int	main(int argc, char **argv)
@@ -71,9 +68,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		pid = ft_atoi(argv[1]);
-		ft_printf("pid: %d\n", pid);
 		message = ft_strdup(argv[2]);
-		ft_printf("message: %s\n", message);
 		process_message(pid, message);
 		free(message);
 	}
