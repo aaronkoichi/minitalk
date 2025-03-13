@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:15 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/12 20:33:18 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/13 21:10:43 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,15 @@ void	aknowledge_sig(int signum, siginfo_t *info, void *context)
 {
 	(void)context;
 	if (signum == SIGUSR1)
-		ft_printf("OK! (from PID %d)\n", info->si_pid);
-	else
+	{
+		ft_printf("Message Fully Received! (from PID %d)\n", info->si_pid);
 		g_status = READY;
+	}
+	else
+	{
+		ft_printf("Received Bit(from PID %d)\n", info->si_pid);
+		g_status = READY;
+	}
 }
 
 void	process_char(int pid, char c)
@@ -63,6 +69,9 @@ int	main(int argc, char **argv)
 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaddset(&sa.sa_mask, SIGUSR1);
+	sigaddset(&sa.sa_mask, SIGUSR2);
 	if (argc != 3)
 		return (EXIT_FAILURE);
 	else

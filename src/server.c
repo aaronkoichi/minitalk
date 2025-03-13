@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:21 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/12 14:06:23 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/13 21:04:41 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	main(void)
 	action.sa_sigaction = handle_signal;
 	sigaction(SIGUSR1, &action, NULL);
 	sigaction(SIGUSR2, &action, NULL);
+	sigaddset(&action.sa_mask, SIGUSR1);
+	sigaddset(&action.sa_mask, SIGUSR2);
 	ft_printf("PID: %d\n", getpid());
 	while (1)
 		pause();
