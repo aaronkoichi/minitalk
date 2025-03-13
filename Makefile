@@ -6,7 +6,7 @@
 #    By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/09 15:01:56 by zlee              #+#    #+#              #
-#    Updated: 2025/03/12 11:52:20 by zlee             ###   ########.fr        #
+#    Updated: 2025/03/13 16:03:23 by zlee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-MEM_CHECK = -fsanitize=address -fsanitize=undefined -g3
+# MEM_CHECK = -fsanitize=address -fsanitize=undefined -g3
 
 CLIENT = ./client
 
