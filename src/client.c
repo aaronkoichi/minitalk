@@ -6,13 +6,13 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:15 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/13 21:10:43 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/14 21:41:40 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-char	g_status = BUSY;
+t_data	g_status = {0};
 
 void	aknowledge_sig(int signum, siginfo_t *info, void *context)
 {
@@ -20,12 +20,16 @@ void	aknowledge_sig(int signum, siginfo_t *info, void *context)
 	if (signum == SIGUSR1)
 	{
 		ft_printf("Message Fully Received! (from PID %d)\n", info->si_pid);
-		g_status = READY;
+		g_status.status = READY;
 	}
 	else
 	{
-		ft_printf("Received Bit(from PID %d)\n", info->si_pid);
-		g_status = READY;
+		if (g_status.received == 0)
+		{
+			ft_printf("Sent! (from PID %d)\n", info->si_pid);
+			g_status.received = 1;
+		}
+		g_status.status = READY;
 	}
 }
 
@@ -42,9 +46,9 @@ void	process_char(int pid, char c)
 			kill(pid, SIGUSR1);
 		else
 			kill(pid, SIGUSR2);
-		while (g_status == BUSY)
+		while (g_status.status == BUSY)
 			usleep(1);
-		g_status = BUSY;
+		g_status.status = BUSY;
 	}
 }
 
