@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:21 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/13 21:04:41 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/17 23:33:40 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	handle_signal(int signum, siginfo_t *client, void *context)
 {
-	static char		charac;
-	static int		count;
-	static pid_t	client_pid;
+	static unsigned char		charac;
+	static int					count;
+	static pid_t				client_pid;
 
 	(void)context;
 	if (client->si_pid)
