@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:15 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/14 21:41:40 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/18 10:33:00 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	aknowledge_sig(int signum, siginfo_t *info, void *context)
 	}
 	else
 	{
-		if (g_status.received == 0)
+		if (g_status.received == IDLE)
 		{
 			ft_printf("Sent! (from PID %d)\n", info->si_pid);
-			g_status.received = 1;
+			g_status.received = RECEIVED;
 		}
 		g_status.status = READY;
 	}
@@ -73,7 +73,6 @@ int	main(int argc, char **argv)
 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-	sigaddset(&sa.sa_mask, SIGINT);
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
 	if (argc != 3)

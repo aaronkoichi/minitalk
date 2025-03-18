@@ -6,7 +6,7 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:12 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/14 21:40:08 by zlee             ###   ########.fr       */
+/*   Updated: 2025/03/18 10:33:22 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,16 @@ enum e_status
 	READY
 };
 
+enum e_receive
+{
+	IDLE = 0,
+	RECEIVED
+};
+
 typedef struct s_data
 {
 	enum e_status	status;
-	int				received;
+	enum e_receive	received;
 }	t_data;
 
 #endif
