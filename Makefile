@@ -6,7 +6,7 @@
 #    By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/09 15:01:56 by zlee              #+#    #+#              #
-#    Updated: 2025/03/13 16:03:23 by zlee             ###   ########.fr        #
+#    Updated: 2025/03/19 22:14:50 by zlee             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,13 +28,13 @@ SERVER_FILE = ./src/server.c
 
 all : $(NAME)
 
-libft :
-	make -C libft all
 
-$(CLIENT) :$(CLIENT_FILE) libft
+$(CLIENT) :$(CLIENT_FILE) 
+	make -C libft all
 	$(CC) $(CFLAGS) $(MEM_CHECK) $< libft/libft.a -o $@
 
-$(SERVER) : $(SERVER_FILE) libft
+$(SERVER) : $(SERVER_FILE)
+	make -C libft all
 	$(CC) $(CFLAGS) $(MEM_CHECK) $< libft/libft.a -o $@
 
 clean :
