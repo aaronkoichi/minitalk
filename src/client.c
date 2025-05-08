@@ -6,13 +6,13 @@
 /*   By: zlee <zlee@student.42kl.edu.my>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:00:15 by zlee              #+#    #+#             */
-/*   Updated: 2025/03/18 10:33:00 by zlee             ###   ########.fr       */
+/*   Updated: 2025/05/08 14:23:16 by zlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minitalk.h"
 
-t_data	g_status = {0};
+static t_data	g_status = {0};
 
 void	aknowledge_sig(int signum, siginfo_t *info, void *context)
 {
